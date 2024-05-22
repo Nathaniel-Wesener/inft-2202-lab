@@ -1,31 +1,31 @@
 const handleSubmitClick = (event) =>{
     
     event.preventDefault();
-    const valid = validateContactInfo(event.target);
+    const valid = validateProductInfo(event.target);
 
     if (valid){
-        storeMsg({
+        storeProduct({
             name: event.target.formName.value,
-            phone: event.target.formPhone.value,
-            email: event.target.formEmail.value,
-            message: event.target.formMessage.value
+            price: event.target.formPrice.value,
+            stock: event.target.formStock.value,
+            desc: event.target.formDesc.value
         });
 
-        alert("Message Submitted! Thank you for your feedback.")
+        alert("Product Submitted! Thank you using our website.")
 
         event.target.formName.value = "";
-        event.target.formPhone.value = "";
-        event.target.formEmail.value = "";
-        event.target.formMessage.value = "";
+        event.target.formPrice.value = "";
+        event.target.formStock.value = "";
+        event.target.formDesc.value = "";
     }
 
 }
 
-const form = document.getElementById('formContact');
+const form = document.getElementById('formAdd');
 
 form.addEventListener('submit', handleSubmitClick);
 
-function validateContactInfo(form) {
+function validateProductInfo(form) {
     
     let formValid = true;
 
@@ -36,63 +36,75 @@ function validateContactInfo(form) {
     if (name === "") {
         formValid = false;
         eleNameError.classList.remove('d-none');
-        eleNameError.textContent = "To submit a message you must leave a name!";
+        eleNameError.textContent = "All products must have names!";
+    } else if (localStorage.getItem('products') !== null){
+        const names = JSON.parse(localStorage.getItem('products'));
+        for (let value of names){
+            if (value.name === name) {
+                eleNameError.classList.remove('d-none');
+                eleNameError.textContent = "A product already has this Name";
+                formValid = false;
+                break;
+            } else {
+                eleNameError.classList.add('d-none');
+            }
+        }
     } else {
         eleNameError.classList.add('d-none');
     }
 
-    const phone = form.formPhone.value;
-    const elePhoneError =document.getElementById('phoneError');
+    const price = form.formPrice.value;
+    const elePriceError =document.getElementById('priceError');
     
-    if (phone === "") {
+    if (price === "") {
         formValid = false;
-        elePhoneError.classList.remove('d-none');
-        elePhoneError.textContent = "To submit a message you must leave a phone number!";
-    } else if (phone.length != 10) {
+        elePriceError.classList.remove('d-none');
+        elePriceError.textContent = "All products must be priced!";
+    } else if (price < 0.01) {
         formValid = false;
-        elePhoneError.classList.remove('d-none');
-        elePhoneError.textContent = "Phone numbers must have ten digits!";
+        elePriceError.classList.remove('d-none');
+        elePriceError.textContent = "Products can not be free or worth negative money!";
     }else {
-        elePhoneError.classList.add('d-none');
+        elePriceError.classList.add('d-none');
     }
 
-    const email = form.formEmail.value;
-    const eleEmailError =document.getElementById('emailError');
+    const stock = form.formStock.value;
+    const eleStockError =document.getElementById('stockError');
     
-    if (email === "") {
+    if (stock === "") {
         formValid = false;
-        eleEmailError.classList.remove('d-none');
-        eleEmailError.textContent = "To submit a message you must leave an email address!";
+        eleStockError.classList.remove('d-none');
+        eleStockError.textContent = "You must specify your stock of product!";
     } else {
-        eleEmailError.classList.add('d-none');
+        eleStockError.classList.add('d-none');
     }
 
-    const msg = form.formMessage.value;
-    const eleMsgError =document.getElementById('messageError');
+    const desc = form.formDesc.value;
+    const eleDescError =document.getElementById('descError');
     
-    if (msg === "") {
+    if (desc === "") {
         formValid = false;
-        eleMsgError.classList.remove('d-none');
-        eleMsgError.textContent = "To submit a message you must leave a message (obviously)!";
+        eleDescError.classList.remove('d-none');
+        eleDescError.textContent = "You must submit a product description!";
     } else {
-        eleMsgError.classList.add('d-none');
+        eleDescError.classList.add('d-none');
     }
     
     return formValid;
 }
 
-function storeMsg(msg) {
+function storeProduct(product) {
     
-    if (localStorage.getItem('messages') === null) {
-        const newMsg = [msg];
-        localStorage.setItem('messages', JSON.stringify(newMsg));
+    if (localStorage.getItem('products') === null) {
+        const newProduct = [product];
+        localStorage.setItem('products', JSON.stringify(newProduct));
     }
     else{
         
-        let array = JSON.parse(localStorage.getItem('messages'));
+        let array = JSON.parse(localStorage.getItem('products'));
         
         
-        array.push(msg);
-        localStorage.setItem('messages', JSON.stringify(array));
+        array.push(product);
+        localStorage.setItem('products', JSON.stringify(array));
     }
 }
