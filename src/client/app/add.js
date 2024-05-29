@@ -1,17 +1,33 @@
+import { saveProduct } from './product.service.js';
+
 const handleSubmitClick = (event) =>{
     
     event.preventDefault();
     const valid = validateProductInfo(event.target);
 
     if (valid){
-        storeProduct({
+        
+        console.log(event.target.formName.value);
+        console.log(event.target.formPrice.value);
+        console.log(event.target.formStock.value);
+        console.log(event.target.formDesc.value);
+        
+        const unique = saveProduct({
             name: event.target.formName.value,
             price: event.target.formPrice.value,
             stock: event.target.formStock.value,
             desc: event.target.formDesc.value
         });
 
-        alert("Product Submitted! Thank you using our website.")
+        if (unique) {
+            alert("Product Submitted! Thank you using our website.");    
+        }
+        else{
+            const eleNameError =document.getElementById('nameError');
+            eleNameError.classList.remove('d-none');
+            eleNameError.textContent = "Error: product must have a unique name";
+        }
+        
 
         event.target.formName.value = "";
         event.target.formPrice.value = "";
@@ -37,29 +53,22 @@ function validateProductInfo(form) {
         formValid = false;
         eleNameError.classList.remove('d-none');
         eleNameError.textContent = "All products must have names!";
-    } else if (localStorage.getItem('products') !== null){
-        const names = JSON.parse(localStorage.getItem('products'));
-        for (let value of names){
-            if (value.name === name) {
-                eleNameError.classList.remove('d-none');
-                eleNameError.textContent = "A product already has this Name";
-                formValid = false;
-                break;
-            } else {
-                eleNameError.classList.add('d-none');
-            }
-        }
     } else {
         eleNameError.classList.add('d-none');
     }
 
-    const price = form.formPrice.value;
+    let price = form.formPrice.value;
+    price = Number(price);
     const elePriceError =document.getElementById('priceError');
     
     if (price === "") {
         formValid = false;
         elePriceError.classList.remove('d-none');
         elePriceError.textContent = "All products must be priced!";
+    }  else if (isNaN(price)) {
+        formValid = false;
+        elePriceError.classList.remove('d-none');
+        elePriceError.textContent = "Your price must be a number!";
     } else if (price < 0.01) {
         formValid = false;
         elePriceError.classList.remove('d-none');
@@ -68,14 +77,25 @@ function validateProductInfo(form) {
         elePriceError.classList.add('d-none');
     }
 
-    const stock = form.formStock.value;
+    let stock = form.formStock.value;
+    stock = Number(stock);
     const eleStockError =document.getElementById('stockError');
     
     if (stock === "") {
         formValid = false;
         eleStockError.classList.remove('d-none');
         eleStockError.textContent = "You must specify your stock of product!";
-    } else {
+    } else if (isNaN(stock)) {
+        formValid = false;
+        eleStockError.classList.remove('d-none');
+        console.log(typeof stock);
+        eleStockError.textContent = "Your stock must be a number!";
+    } else if (stock < 1) {
+        formValid = false;
+        eleStockError.classList.remove('d-none');
+        eleStockError.textContent = "Your stock must be greater than zero!";
+
+    }else {
         eleStockError.classList.add('d-none');
     }
 
@@ -93,18 +113,3 @@ function validateProductInfo(form) {
     return formValid;
 }
 
-function storeProduct(product) {
-    
-    if (localStorage.getItem('products') === null) {
-        const newProduct = [product];
-        localStorage.setItem('products', JSON.stringify(newProduct));
-    }
-    else{
-        
-        let array = JSON.parse(localStorage.getItem('products'));
-        
-        
-        array.push(product);
-        localStorage.setItem('products', JSON.stringify(array));
-    }
-}
