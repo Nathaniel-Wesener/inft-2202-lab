@@ -88,4 +88,6 @@ function addCard(product, div) {
 
     newCard.appendChild(newDiv);
     div.appendChild(newCard);
+    const space = document.createElement("br");
+    div.appendChild(space);
 }
