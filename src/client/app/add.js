@@ -11,6 +11,9 @@ const handleSubmitClick = (event) =>{
         console.log(event.target.formPrice.value);
         console.log(event.target.formStock.value);
         console.log(event.target.formDesc.value);
+        console.log(event.target.formImg.value);
+
+        
         
         const unique = saveProduct({
             name: event.target.formName.value,
@@ -33,6 +36,8 @@ const handleSubmitClick = (event) =>{
         event.target.formPrice.value = "";
         event.target.formStock.value = "";
         event.target.formDesc.value = "";
+        event.target.formImg.value = "";
+        
     }
 
 }

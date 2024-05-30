@@ -45,16 +45,45 @@ function addCard(product, div) {
     newDesc.appendChild(newText);
     newDiv.appendChild(newDesc);
 
-    const newBuy = document.createElement("button")
-    newBuy.textContent = "Add to Cart";
+    const newStock = document.createElement("p");
+    newStock.classList.add('card-text');
+    newText = document.createTextNode(`In Stock: ${product.stock}`);
+    newStock.appendChild(newText);
+    newDiv.appendChild(newStock);
+
+    const newPrice = document.createElement("p");
+    newPrice.classList.add('card-text');
+    newText = document.createTextNode(`Price: $${product.price}`);
+    newPrice.appendChild(newText);
+    newDiv.appendChild(newPrice);
+
+    const newBuy = document.createElement("button");
+    const newButtonCartImg = document.createElement("img");
+    newButtonCartImg.src = "../../node_modules/@fortawesome/fontawesome-free/svgs/solid/cart-shopping.svg";
+    newButtonCartImg.width = "20";
+    newButtonCartImg.height = "20";
+    newBuy.appendChild(newButtonCartImg);
     newBuy.classList.add('btn');
     newBuy.classList.add('btn-primary');
     newDiv.appendChild(newBuy);
     
     const newDelete = document.createElement("button");
-    newDelete.textContent = "Delete"
+    newText = document.createTextNode("   ");
+    newDiv.appendChild(newText);
+    
     newDelete.classList.add('btn');
     newDelete.classList.add('btn-danger');
+    const newButtonTrashImg = document.createElement("img");
+    newButtonTrashImg.src = "../../node_modules/@fortawesome/fontawesome-free/svgs/regular/trash-can.svg";
+    newButtonTrashImg.width = "20";
+    newButtonTrashImg.height = "20";
+    newDelete.appendChild(newButtonTrashImg);
+    newDelete.addEventListener('click', (event) =>{
+        const deleted = deleteProduct(product.name);
+        if (deleted) {
+            window.location.reload();
+        }
+    });
     newDiv.appendChild(newDelete);
 
     newCard.appendChild(newDiv);

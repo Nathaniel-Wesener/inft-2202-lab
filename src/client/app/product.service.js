@@ -26,7 +26,7 @@ export function saveProduct(product) {
 }
 
 export function findProduct(name){
-    list = getProduct();
+    let list = getProduct();
 
     if (list === null) {
         return null;
@@ -42,15 +42,16 @@ export function findProduct(name){
 
 
 export function editProduct(product){
-    let oldProduct = findProduct(animal.name);
+    let oldProduct = findProduct(product.name);
 
     if (oldProduct === null){
         return false;
     }
-
+    
+    const getOldProduct = (element) => element.name === product.name;
     let list = getAnimal();
 
-    let index = list.findIndex(oldProduct);
+    let index = list.findIndex(getOldProduct);
 
     list[index] = product;
 
@@ -62,7 +63,7 @@ export function editProduct(product){
 
 
 export function deleteProduct(name){
-    list = getProduct();
+    let list = getProduct();
 
     if (list === null) {
         return false;
