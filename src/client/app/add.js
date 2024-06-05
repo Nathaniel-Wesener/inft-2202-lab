@@ -1,4 +1,11 @@
-import { saveProduct } from './product.service.js';
+import { saveProduct } from './product.mock.service.js';
+
+const params = new URL(document.location).searchParams;
+const search = params.get("name")
+
+if (search === "" || search === null) {
+    form.addEventListener('submit', handleAddClick);
+}
 
 const handleSubmitClick = (event) =>{
     
@@ -46,7 +53,7 @@ const form = document.getElementById('formAdd');
 
 form.addEventListener('submit', handleSubmitClick);
 
-function validateProductInfo(form) {
+export function validateProductInfo(form) {
     
     let formValid = true;
 

@@ -1,4 +1,4 @@
-import { getProduct, deleteProduct } from "./product.service.js";
+import { getProduct, deleteProduct } from "./product.mock.service.js";
 
 let products = getProduct();
 if (products.length === 0) {
@@ -68,6 +68,23 @@ function addCard(product, div) {
     newBuy.classList.add('btn');
     newBuy.classList.add('btn-primary');
     newDiv.appendChild(newBuy);
+
+    newText = document.createTextNode("   ");
+    newDiv.appendChild(newText);
+
+    const newEdit = document.createElement("button");
+    newEdit.textContent = "Edit"
+    newEdit.title = "click this button to be taken to a form where you can edit the product"
+    newEdit.classList.add('btn');
+    newEdit.classList.add('btn-secondary');
+    newEdit.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const url = new URL("http://127.0.0.1:5500/src/client/add.html");
+        url.searchParams.set('name', product.name);
+        window.location.replace(url);
+    });
+    newDiv.appendChild(newEdit);
     
     const newDelete = document.createElement("button");
     newText = document.createTextNode("   ");
