@@ -1,10 +1,12 @@
+import { saveMessage } from "./product.mock.service";
+
 const handleSubmitClick = (event) =>{
     
     event.preventDefault();
     const valid = validateContactInfo(event.target);
 
     if (valid){
-        storeMsg({
+        saveMessage({
             name: event.target.formName.value,
             phone: event.target.formPhone.value,
             email: event.target.formEmail.value,
@@ -31,7 +33,7 @@ function validateContactInfo(form) {
 
 
     const name = form.formName.value;
-    const eleNameError =document.getElementById('nameError');
+    const eleNameError = document.getElementById('nameError');
 
     if (name === "") {
         formValid = false;
@@ -79,20 +81,4 @@ function validateContactInfo(form) {
     }
     
     return formValid;
-}
-
-function storeMsg(msg) {
-    
-    if (localStorage.getItem('messages') === null) {
-        const newMsg = [msg];
-        localStorage.setItem('messages', JSON.stringify(newMsg));
-    }
-    else{
-        
-        let array = JSON.parse(localStorage.getItem('messages'));
-        
-        
-        array.push(msg);
-        localStorage.setItem('messages', JSON.stringify(array));
-    }
 }

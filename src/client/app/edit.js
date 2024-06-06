@@ -31,6 +31,7 @@ function setUpEditForm(product) {
     
         if (valid) {
             const worked = editProduct({
+                
                 name: event.target.formName.value,
                 price: event.target.formPrice.value,
                 stock: event.target.formStock.value,

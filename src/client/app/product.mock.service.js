@@ -78,3 +78,18 @@ export function deleteProduct(name){
         return false;
     }
 }
+
+export function saveMessage(msg) {
+    if (localStorage.getItem('messages') === null) {
+        const newMsg = [msg];
+        localStorage.setItem('messages', JSON.stringify(newMsg));
+    }
+    else{
+        
+        let array = JSON.parse(localStorage.getItem('messages'));
+        
+        
+        array.push(msg);
+        localStorage.setItem('messages', JSON.stringify(array));
+    }
+}
