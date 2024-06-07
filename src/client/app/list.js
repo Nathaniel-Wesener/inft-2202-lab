@@ -1,12 +1,30 @@
 import { getProduct, deleteProduct } from "./product.mock.service.js";
 
+
+
 let products = getProduct();
 if (products.length === 0) {
     const eleDisclaimer = document.getElementById('noProduct');
     eleDisclaimer.classList.remove('d-none');
 }
 else if (products.length > 4){
+    
     drawProductCardsPagination(products);
+    
+    const params = new URL(document.location).searchParams;
+    const search = params.get("page");
+
+    const remainder = products.length % 4;
+    let numPages;
+
+    if (remainder === 0) {
+        numPages = products.length / 4;
+    } else {
+        numPages = (( products.length - remainder ) / 4 ) + 1;
+    }
+    if (search !== null) {
+        setPage(products, search, numPages);
+    }
 } else {
     drawProductCards(products);
 }
@@ -152,6 +170,8 @@ function drawProductCardsPagination(list) {
     newLink.href = "#";
     newLink.addEventListener('click', (event) => {
         currentPage  = setPage(list, currentPage - 1, numPages);
+        let url = new URL("http://127.0.0.1:5500/src/client/list.html");
+        url.searchParams.set('page', currentPage);
     });
     newItem.appendChild(newLink);
     eleNav.appendChild(newItem);
@@ -165,6 +185,8 @@ function drawProductCardsPagination(list) {
         newLink.href = "#";
         newLink.addEventListener('click', (event) => {
             currentPage  = setPage(list, index + 1, numPages);
+            let url = new URL("http://127.0.0.1:5500/src/client/list.html");
+            url.searchParams.set('page', currentPage);
         });
         newItem.appendChild(newLink);
         eleNav.appendChild(newItem);  
@@ -178,6 +200,9 @@ function drawProductCardsPagination(list) {
     newLink.href = "#";
     newLink.addEventListener('click', (event) => {
         currentPage  = setPage(list, currentPage + 1, numPages);
+        
+        let url = new URL("http://127.0.0.1:5500/src/client/list.html");
+        url.searchParams.set('page', page);
     });
     newItem.appendChild(newLink);
     eleNav.appendChild(newItem);
@@ -186,6 +211,7 @@ function drawProductCardsPagination(list) {
 }
 
 function setPage(list, page, numPages) {
+    
     
     const eleNav = document.getElementById('page-links');
 
