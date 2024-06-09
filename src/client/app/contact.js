@@ -1,4 +1,4 @@
-import { saveMessage } from "./product.mock.service";
+import { productService } from "./product.mock.service.js";
 
 const handleSubmitClick = (event) =>{
     
@@ -6,7 +6,7 @@ const handleSubmitClick = (event) =>{
     const valid = validateContactInfo(event.target);
 
     if (valid){
-        saveMessage({
+        productService.saveMessage({
             name: event.target.formName.value,
             phone: event.target.formPhone.value,
             email: event.target.formEmail.value,

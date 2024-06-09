@@ -1,8 +1,6 @@
-import { getProduct, deleteProduct } from "./product.mock.service.js";
+import { productService } from "./product.mock.service.js";
 
-
-
-let products = getProduct();
+let products = productService.getProduct();
 if (products.length === 0) {
     const eleDisclaimer = document.getElementById('noProduct');
     eleDisclaimer.classList.remove('d-none');
@@ -128,7 +126,7 @@ function addCard(product, div) {
         });
         const eleModalDelete = document.getElementById('modal-delete');
         eleModalDelete.addEventListener('click', (event) =>{
-            const deleted = deleteProduct(product.name);
+            const deleted = productService.deleteProduct(product.name);
     
             if (deleted) {
                 window.location.reload();

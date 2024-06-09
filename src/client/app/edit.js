@@ -1,11 +1,11 @@
-import { findProduct, editProduct } from './product.mock.service.js';
+import { productService } from './product.mock.service.js';
 import { validateProductInfo } from './add.js';
 
 const params = new URL(document.location).searchParams;
 const search = params.get("name");
 
 if (search !== null) {
-    setUpEditForm(findProduct(search));
+    setUpEditForm(productService.findProduct(search));
 }
 
 
@@ -30,7 +30,7 @@ function setUpEditForm(product) {
         event.preventDefault();
     
         if (valid) {
-            const worked = editProduct({
+            const worked = productService.editProduct({
                 
                 name: event.target.formName.value,
                 price: event.target.formPrice.value,

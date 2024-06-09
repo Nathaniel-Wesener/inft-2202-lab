@@ -1,11 +1,11 @@
-import { saveProduct } from './product.mock.service.js';
+import { productService } from './product.mock.service.js';
 
 const params = new URL(document.location).searchParams;
 const search = params.get("name")
 
-if (search === "" || search === null) {
-    form.addEventListener('submit', handleAddClick);
-}
+const form = document.getElementById('formAdd');
+
+
 
 const handleSubmitClick = (event) =>{
     
@@ -22,7 +22,7 @@ const handleSubmitClick = (event) =>{
 
         
         
-        const unique = saveProduct({
+        const unique = productService.saveProduct({
             name: event.target.formName.value,
             price: event.target.formPrice.value,
             stock: event.target.formStock.value,
@@ -49,9 +49,11 @@ const handleSubmitClick = (event) =>{
 
 }
 
-const form = document.getElementById('formAdd');
+if (search === "" || search === null) {
+    form.addEventListener('submit', handleSubmitClick);
+}
 
-form.addEventListener('submit', handleSubmitClick);
+
 
 export function validateProductInfo(form) {
     

@@ -1,16 +1,23 @@
-export function getProduct() {
+function productMockService()
+{
     let list = [];
 
-    if (localStorage.getItem('products') !== null) {
-        list = JSON.parse(localStorage.getItem('products'));
-    } 
+    if (localStorage.getItem('products') === null) {
+        localStorage.setItem('products', list);
+    }
+}
+
+productMockService.prototype.getProduct = function() {
+
+    const list = JSON.parse(localStorage.getItem('products'));
+
     return list;
 }
 
-export function saveProduct(product) {
+productMockService.prototype.saveProduct = function(product) {
     
     let valid = true;
-    let existProducts = getProduct();
+    let existProducts = this.getProduct();
 
     for(let value of existProducts){
         if (value.name === product.name) {
@@ -25,8 +32,8 @@ export function saveProduct(product) {
     return valid;
 }
 
-export function findProduct(name){
-    let list = getProduct();
+productMockService.prototype.findProduct = function(name) {
+    let list = this.getProduct();
 
     if (list === null) {
         return null;
@@ -41,15 +48,15 @@ export function findProduct(name){
 }
 
 
-export function editProduct(product){
-    let oldProduct = findProduct(product.name);
+productMockService.prototype.editProduct = function(product) {
+    let oldProduct = this.findProduct(product.name);
 
     if (oldProduct === null){
         return false;
     }
     
     const getOldProduct = (element) => element.name === product.name;
-    let list = getAnimal();
+    let list = this.getProduct();
 
     let index = list.findIndex(getOldProduct);
 
@@ -62,8 +69,8 @@ export function editProduct(product){
 }
 
 
-export function deleteProduct(name){
-    let list = getProduct();
+productMockService.prototype.deleteProduct = function(name) {
+    let list = this.getProduct();
 
     if (list === null) {
         return false;
@@ -79,7 +86,7 @@ export function deleteProduct(name){
     }
 }
 
-export function saveMessage(msg) {
+productMockService.prototype.saveMessage = function(msg) {
     if (localStorage.getItem('messages') === null) {
         const newMsg = [msg];
         localStorage.setItem('messages', JSON.stringify(newMsg));
@@ -93,3 +100,5 @@ export function saveMessage(msg) {
         localStorage.setItem('messages', JSON.stringify(array));
     }
 }
+
+export const productService = new productMockService();

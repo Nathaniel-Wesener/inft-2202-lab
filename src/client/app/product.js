@@ -14,7 +14,6 @@ export function createProduct(name, price, stock, desc) {
         price: price,
         stock: stock,
         desc: desc,
-
         /**
          * Function that returns a string description of the product.
          * @returns A string describing the product.
