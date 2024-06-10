@@ -1,3 +1,9 @@
+/* 
+Author: Nathaniel Wesener
+Date: 2024-06-09
+File Name: contact.js
+File Description: File that handles the contact form on the contact.html page.
+*/
 import { productService } from "./product.mock.service.js";
 
 const handleSubmitClick = (event) =>{

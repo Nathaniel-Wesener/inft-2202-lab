@@ -1,3 +1,10 @@
+/* 
+Author: Nathaniel Wesener
+Date: 2024-06-09
+File Name: product.js
+File Description: JS file that creates aand exports a product constructor.
+*/
+
 /**
  * Function that creates a JSON product object
  * @param {string} name The name of the product.

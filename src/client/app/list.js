@@ -1,3 +1,9 @@
+/* 
+Author: Nathaniel Wesener
+Date: 2024-06-09
+File Name: list.js
+File Description: file that displays the products stored in local storage as cards. (Image fuctionality pending).
+*/
 import { productService } from "./product.mock.service.js";
 
 let products = productService.getProduct();
@@ -165,11 +171,10 @@ function drawProductCardsPagination(list) {
     let newLink = document.createElement("a");
     newLink.classList.add('page-link');
     newLink.textContent = "Prev";
-    newLink.href = "#";
+    newLink.href = "";
     newLink.addEventListener('click', (event) => {
+        event.preventDefault();
         currentPage  = setPage(list, currentPage - 1, numPages);
-        let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-        url.searchParams.set('page', currentPage);
     });
     newItem.appendChild(newLink);
     eleNav.appendChild(newItem);
@@ -180,11 +185,10 @@ function drawProductCardsPagination(list) {
         newLink = document.createElement("a");
         newLink.classList.add('page-link');
         newLink.textContent = `${ index + 1 }`;
-        newLink.href = "#";
+        newLink.href = "";
         newLink.addEventListener('click', (event) => {
+            event.preventDefault();
             currentPage  = setPage(list, index + 1, numPages);
-            let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-            url.searchParams.set('page', currentPage);
         });
         newItem.appendChild(newLink);
         eleNav.appendChild(newItem);  
@@ -195,12 +199,10 @@ function drawProductCardsPagination(list) {
     newLink = document.createElement("a");
     newLink.classList.add('page-link');
     newLink.textContent = "Next";
-    newLink.href = "#";
+    newLink.href = "";
     newLink.addEventListener('click', (event) => {
+        event.preventDefault();
         currentPage  = setPage(list, currentPage + 1, numPages);
-        
-        let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-        url.searchParams.set('page', page);
     });
     newItem.appendChild(newLink);
     eleNav.appendChild(newItem);
@@ -210,7 +212,9 @@ function drawProductCardsPagination(list) {
 
 function setPage(list, page, numPages) {
     
-    
+    let url = new URL("http://127.0.0.1:5500/src/client/list.html");
+    url.searchParams.set('page', page);
+    window.history.pushState("", "", url);
     const eleNav = document.getElementById('page-links');
 
     for (let iterator of eleNav.children) {
@@ -242,7 +246,6 @@ function setPage(list, page, numPages) {
         }
         addCard(list[ ( (page - 1 ) * 4 )  + index], div);
     }
-        
     
     return page;
 }

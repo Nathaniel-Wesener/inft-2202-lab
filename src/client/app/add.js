@@ -1,3 +1,10 @@
+/* 
+Author: Nathaniel Wesener
+Date: 2024-06-09
+File Name: add.js
+File Description: File that handles the add form in the add.html file. (Image fuctionality pending).
+*/
+
 import { productService } from './product.mock.service.js';
 
 const params = new URL(document.location).searchParams;

@@ -1,3 +1,9 @@
+/* 
+Author: Nathaniel Wesener
+Date: 2024-06-09
+File Name: edit.js
+File Description: File thatchanges the add.html form into an edit form and handles it.
+*/
 import { productService } from './product.mock.service.js';
 import { validateProductInfo } from './add.js';
 

@@ -1,3 +1,10 @@
+/* 
+Author: Nathaniel Wesener
+Date: 2024-06-09
+File Name: product.mock.service.js
+File Description: JS file that creates and exports a product service object with methods that interface with the local storage.
+*/
+
 function productMockService()
 {
     let list = [];
