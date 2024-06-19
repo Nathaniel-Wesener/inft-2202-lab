@@ -4,9 +4,9 @@ Date: 2024-06-09
 File Name: list.js
 File Description: file that displays the products stored in local storage as cards. (Image fuctionality pending).
 */
-import { productService } from "./product.mock.service.js";
+import { service } from "./product.service.js";
 
-let products = productService.getProduct();
+let products = service.getProduct().records;
 if (products.length === 0) {
     const eleDisclaimer = document.getElementById('noProduct');
     eleDisclaimer.classList.remove('d-none');
@@ -51,7 +51,7 @@ function addCard(product, div) {
     const newImg = document.createElement("img");
     newImg.classList.add('card-img-top');
     newImg.src = "./img/default-img.png";
-    newImg.alt = `image of ${product.name}`;
+    newImg.alt = `image of ${product.records.name}`;
     newCard.appendChild(newImg);
 
     const newDiv = document.createElement("div");
@@ -59,25 +59,25 @@ function addCard(product, div) {
 
     const newHead = document.createElement("h5");
     newHead.classList.add('card-title');
-    let newText = document.createTextNode(product.name);
+    let newText = document.createTextNode(product.records.name);
     newHead.appendChild(newText);
     newDiv.appendChild(newHead);
 
     const newDesc = document.createElement("p");
     newDesc.classList.add('card-text');
-    newText = document.createTextNode(product.desc);
+    newText = document.createTextNode(product.records.description);
     newDesc.appendChild(newText);
     newDiv.appendChild(newDesc);
 
     const newStock = document.createElement("p");
     newStock.classList.add('card-text');
-    newText = document.createTextNode(`In Stock: ${product.stock}`);
+    newText = document.createTextNode(`In Stock: ${product.records.stock}`);
     newStock.appendChild(newText);
     newDiv.appendChild(newStock);
 
     const newPrice = document.createElement("p");
     newPrice.classList.add('card-text');
-    newText = document.createTextNode(`Price: $${product.price}`);
+    newText = document.createTextNode(`Price: $${product.records.price}`);
     newPrice.appendChild(newText);
     newDiv.appendChild(newPrice);
 
@@ -132,7 +132,7 @@ function addCard(product, div) {
         });
         const eleModalDelete = document.getElementById('modal-delete');
         eleModalDelete.addEventListener('click', (event) =>{
-            const deleted = productService.deleteProduct(product.name);
+            const deleted = productService.deleteProduct(product.records.productId);
     
             if (deleted) {
                 window.location.reload();

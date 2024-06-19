@@ -26,7 +26,7 @@ function setUpEditForm(product) {
     form.formName.disabled = true;
     form.formPrice.value = product.price;
     form.formStock.value = product.stock;
-    form.formDesc.value = product.desc;
+    form.formDesc.value = product.description;
     form.formSubmit.value = "Edit Product";
 
     form.addEventListener('submit', (event) =>{

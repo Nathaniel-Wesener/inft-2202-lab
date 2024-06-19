@@ -33,7 +33,7 @@ const handleSubmitClick = (event) =>{
             name: event.target.formName.value,
             price: event.target.formPrice.value,
             stock: event.target.formStock.value,
-            desc: event.target.formDesc.value
+            description: event.target.formDesc.value
         });
 
         if (unique) {

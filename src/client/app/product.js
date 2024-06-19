@@ -20,7 +20,7 @@ export function createProduct(name, price, stock, desc) {
         name: name,
         price: price,
         stock: stock,
-        desc: desc,
+        description: desc,
         /**
          * Function that returns a string description of the product.
          * @returns A string describing the product.
