@@ -12,6 +12,8 @@ const search = params.get("id");
 
 if (search !== null) {
     setUpEditForm(await service.findProduct(search));
+    const title = document.getElementById('title');
+    title.textContent = 'edit';
 }
 
 
@@ -43,12 +45,12 @@ function setUpEditForm(product) {
                 name: event.target.formName.value,
                 price: event.target.formPrice.value,
                 stock: event.target.formStock.value,
-                desc: event.target.formDesc.value
+                description: event.target.formDesc.value
             }, search);
 
 
             if (worked) {
-                window.location = "./list.html"
+                window.location = "./list.html";
             }
         }
     });

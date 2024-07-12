@@ -37,7 +37,7 @@ const handleSubmitClick = (event) =>{
         });
 
         if (unique) {
-                
+            window.location = "./list.html";  
         }
         else{
             const eleNameError =document.getElementById('nameError');
@@ -58,6 +58,8 @@ const handleSubmitClick = (event) =>{
 
 if (search === "" || search === null) {
     form.addEventListener('submit', handleSubmitClick);
+    const title = document.getElementById('title');
+    title.textContent = 'add';
 }
 
 
