@@ -5,10 +5,10 @@ File Name: add.js
 File Description: File that handles the add form in the add.html file. (Image fuctionality pending).
 */
 
-import { productService } from './product.mock.service.js';
+import { service } from './product.service.js';
 
 const params = new URL(document.location).searchParams;
-const search = params.get("name")
+const search = params.get("id")
 
 const form = document.getElementById('formAdd');
 
@@ -29,7 +29,7 @@ const handleSubmitClick = (event) =>{
 
         
         
-        const unique = productService.saveProduct({
+        const unique = service.saveProduct({
             name: event.target.formName.value,
             price: event.target.formPrice.value,
             stock: event.target.formStock.value,
@@ -37,7 +37,7 @@ const handleSubmitClick = (event) =>{
         });
 
         if (unique) {
-            alert("Product Submitted! Thank you using our website.");    
+                
         }
         else{
             const eleNameError =document.getElementById('nameError');

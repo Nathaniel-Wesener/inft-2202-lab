@@ -7,7 +7,7 @@ File Description: JS file that creates and exports a product service object with
 
 function productService()
 {
-
+    
 }
 
 productService.prototype.getProduct = async function() {
@@ -31,7 +31,9 @@ productService.prototype.getProduct = async function() {
     }
 }
 
-productService.prototype.getProduct = async function(productId){
+productService.prototype.findProduct = async function(productId){
+    const api = 'products';
+    productId = api.concat('/', productId);
     const url = new URL(productId, 'https://inft2202.paclan.net/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
@@ -59,10 +61,10 @@ productService.prototype.getProduct = async function(productId){
 productService.prototype.saveProduct = async function(product) {
     
     let valid = true;
-    let existProducts =  await this.getProduct().records;
+    let existProducts =  await this.getProduct();
 
-    for(let value of existProducts){
-        if (value.name === product.name) {
+    for(let value of existProducts.records){
+        if (value.productId === product.productId) {
             valid = false;
         }
     }
@@ -90,29 +92,31 @@ productService.prototype.saveProduct = async function(product) {
     return valid;
 }
 
-productService.prototype.findProduct = function(name) {
-    let list = this.getProduct();
+// productService.prototype.findProduct = function(id) {
+//     let list = this.getProduct();
+// 
+//     if (list === null) {// 
+//        return null;
+//     } else{
+//         for (let value of list) {
+//             if (value.productId === id){
+//                 return value;
+//             }
+//         }
+//         return null;
+//     }
+// }
 
-    if (list === null) {
-        return null;
-    } else{
-        for (let value of list) {
-            if (value.name === name){
-                return value;
-            }
-        }
-        return null;
-    }
-}
 
+productService.prototype.editProduct = async function(product, productId) {
+    let oldProduct =  await this.findProduct(productId);
 
-productService.prototype.editProduct = async function(product) {
-    let oldProduct =  await this.getProduct(product.productId);
 
     if (oldProduct === false){
         return false;
     }
-    
+    const api = 'products';
+    oldProduct.productId = api.concat('/', oldProduct.productId);
     const url = new URL(oldProduct.productId, 'https://inft2202.paclan.net/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
@@ -135,6 +139,9 @@ productService.prototype.editProduct = async function(product) {
 
 
 productService.prototype.deleteProduct = async function(productId) {
+    
+    const api = 'products';
+    productId = api.concat('/', productId);
     const url = new URL(productId, 'https://inft2202.paclan.net/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
