@@ -6,13 +6,24 @@ File Description: file that displays the products stored in local storage as car
 */
 import { service } from "./product.service.js";
 
-let products =  await service.getProduct();
+const spinner = document.getElementById('loading');
+spinner.classList.remove('d-none')
+let products;
+try {
+    spinner.classList.add('d-none');
+    products =  await service.getProduct();
+} catch (error) {
+    spinner.classList.add('d-none');
+    console.error(error);
+    const eleServer = document.getElementById('serverError')
+    eleServer.classList.remove('d-none');
+}
+
 console.log(products);
-if (products.records.length === 0) {
+if (products.records.length === 0 || products === null) {
     const eleDisclaimer = document.getElementById('noProduct');
     eleDisclaimer.classList.remove('d-none');
-}
-else if (products.records.length > 4){
+} else{
     
     
     
@@ -46,8 +57,6 @@ else if (products.records.length > 4){
     }
     await drawProductCardsPagination(products, page, perPage);
     setPage(products, page, numPages, perPage);
-} else {
-    drawProductCards(products);
 }
 
 let select = document.getElementById('drop2');

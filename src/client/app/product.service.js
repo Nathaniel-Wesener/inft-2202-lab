@@ -27,7 +27,7 @@ productService.prototype.getProduct = async function() {
         return products;
     } catch (error) {
         console.error('ERROR:', error);
-        return false;
+        return error;
     }
 }
 
@@ -49,12 +49,12 @@ productService.prototype.findProduct = async function(productId){
 
         if(product === null){
             console.error("ERROR: product does not exist.")
-            return false;
+            return error;
         }
         return product;
     } catch (error) {
         console.error('ERROR:', error);
-        return false;
+        return error;
     }
 }
 
@@ -86,10 +86,11 @@ productService.prototype.saveProduct = async function(product) {
             return true;
         } catch (error) {
             console.error('ERROR:', error);
-            return false;
+            return error;
         }
+    } else {
+        throw error;
     }
-    return valid;
 }
 
 // productService.prototype.findProduct = function(id) {
@@ -133,7 +134,7 @@ productService.prototype.editProduct = async function(product, productId) {
         return true;
     } catch (error) {
         console.error('ERROR:', error);
-        return false;
+        return error;
     }
 }
 
@@ -157,7 +158,7 @@ productService.prototype.deleteProduct = async function(productId) {
         return true;
     } catch (error) {
         console.error('ERROR:', error);
-        return false;
+        return error;
     }
 }
 

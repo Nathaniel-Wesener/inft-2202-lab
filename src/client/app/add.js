@@ -27,21 +27,30 @@ const handleSubmitClick = (event) =>{
         console.log(event.target.formDesc.value);
         console.log(event.target.formImg.value);
 
+        const form = document.getElementById('formAdd');
+        const spinner = document.getElementById('loading');
+        form.classList.add('d-none');
+        spinner.classList.remove('d-none');
         
-        
-        const unique = service.saveProduct({
-            name: event.target.formName.value,
-            price: event.target.formPrice.value,
-            stock: event.target.formStock.value,
-            description: event.target.formDesc.value
-        });
-
-        if (unique) {
-            window.location = "./list.html";  
-        }
-        else{
+        try {
+            service.saveProduct({
+                name: event.target.formName.value,
+                price: event.target.formPrice.value,
+                stock: event.target.formStock.value,
+                description: event.target.formDesc.value
+            });
+            form.classList.remove('d-none');
+            spinner.classList.add('d-none');
+            window.location = "./list.html";
+            
+    
+        } catch (error) {
+            form.classList.remove('d-none');
+            spinner.classList.add('d-none');
             const eleNameError =document.getElementById('nameError');
             eleNameError.classList.remove('d-none');
+            const eleServer = document.getElementById('serverError')
+            eleServer.classList.remove('d-none');
             eleNameError.textContent = "Error: product must have a unique name";
         }
         
