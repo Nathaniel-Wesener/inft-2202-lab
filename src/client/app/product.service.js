@@ -12,7 +12,7 @@ function productService()
 
 productService.prototype.getProduct = async function() {
 
-    const url = new URL('https://inft2202.paclan.net/api/products');
+    const url = new URL('http://localhost:3000/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
@@ -34,7 +34,7 @@ productService.prototype.getProduct = async function() {
 productService.prototype.findProduct = async function(productId){
     const api = 'products';
     productId = api.concat('/', productId);
-    const url = new URL(productId, 'https://inft2202.paclan.net/api/products');
+    const url = new URL(productId, 'http://localhost:3000/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
@@ -70,7 +70,7 @@ productService.prototype.saveProduct = async function(product) {
     }
 
     if (valid) {
-        const url = new URL('https://inft2202.paclan.net/api/products');
+        const url = new URL('http://localhost:3000/api/products');
         const headers = new Headers({
             'Content-Type': 'application/json',
             'apikey': '6671bdbff37f86c6ae70326f'
@@ -118,7 +118,7 @@ productService.prototype.editProduct = async function(product, productId) {
     }
     const api = 'products';
     oldProduct.productId = api.concat('/', oldProduct.productId);
-    const url = new URL(oldProduct.productId, 'https://inft2202.paclan.net/api/products');
+    const url = new URL(oldProduct.productId, 'http://localhost:3000/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
@@ -143,7 +143,7 @@ productService.prototype.deleteProduct = async function(productId) {
     
     const api = 'products';
     productId = api.concat('/', productId);
-    const url = new URL(productId, 'https://inft2202.paclan.net/api/products');
+    const url = new URL(productId, 'http://localhost:3000/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'

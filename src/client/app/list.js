@@ -179,7 +179,7 @@ async function addCard(product, div) {
 
     const newOwner = document.createElement("p");
     newOwner.classList.add('card-text');
-    newText = document.createTextNode(`Listed by: ${product.owner.name}`);
+    //newText = document.createTextNode(`Listed by: ${product.owner.name}`);
     newOwner.appendChild(newText);
     newDiv.appendChild(newOwner);
 
@@ -202,7 +202,7 @@ async function addCard(product, div) {
     newText = document.createTextNode("   ");
     newDiv.appendChild(newText);
 
-    if (product.owner.bannerId == 100726411) {
+    //if (product.owner.bannerId == 100726411) {
         const newEdit = document.createElement("button");
         newEdit.textContent = "Edit"
         newEdit.title = "click this button to be taken to a form where you can edit the product"
@@ -250,7 +250,7 @@ async function addCard(product, div) {
 
         });
         newDiv.appendChild(newDelete);
-    }
+    //}
     
     newCard.appendChild(newDiv);
     div.appendChild(newCard);
@@ -328,7 +328,7 @@ function setPage(list, page, numPages, perPage) {
     let url = new URL("http://127.0.0.1:5500/src/client/list.html");
     url.searchParams.set('page', page);
     url.searchParams.set('perPage', perPage)
-    window.history.pushState("", "", url);
+    //window.history.pushState("", "", url);
     const eleNav = document.getElementById('page-links');
 
     for (let iterator of eleNav.children) {

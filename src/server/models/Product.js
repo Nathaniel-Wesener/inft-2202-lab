@@ -5,20 +5,16 @@ const fields = {
         type: String,
         required: true
     },
-    breed: {
+    description: {
         type: String,
         required: true
     },
-    legs: {
+    price: {
         type: Number,
         required: true
     },
-    eyes: {
+    stock: {
         type: Number,
-        required: true
-    },
-    sound: {
-        type: String,
         required: true
     },
     createdAt: {

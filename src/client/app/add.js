@@ -35,9 +35,10 @@ const handleSubmitClick = (event) =>{
         try {
             service.saveProduct({
                 name: event.target.formName.value,
+                description: event.target.formDesc.value,
                 price: event.target.formPrice.value,
-                stock: event.target.formStock.value,
-                description: event.target.formDesc.value
+                stock: event.target.formStock.value
+                
             });
             form.classList.remove('d-none');
             spinner.classList.add('d-none');
