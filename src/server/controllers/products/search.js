@@ -1,4 +1,17 @@
 import Product from '../../models/Product.js';
+import { checkSchema } from 'express-validator';
+
+
+const rules = checkSchema({
+    page: {
+        isNumeric: true,
+        errorMessage: `"page" must be a number`
+    },
+    perPage: {
+        isNumeric: true,
+        errorMessage: `"perPage" must be a number`
+    }
+}, ['query']);
 
 const handle = async(request, response, next) => {
     
@@ -31,4 +44,4 @@ const handle = async(request, response, next) => {
     }
 };
 
-export default {handle};
+export default { handle, rules };

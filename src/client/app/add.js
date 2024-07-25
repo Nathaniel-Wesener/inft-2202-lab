@@ -14,7 +14,7 @@ const form = document.getElementById('formAdd');
 
 
 
-const handleSubmitClick = (event) =>{
+const handleSubmitClick = async (event) =>{
     
     event.preventDefault();
     const valid = validateProductInfo(event.target);
@@ -33,7 +33,7 @@ const handleSubmitClick = (event) =>{
         spinner.classList.remove('d-none');
         
         try {
-            service.saveProduct({
+            await service.saveProduct({
                 name: event.target.formName.value,
                 description: event.target.formDesc.value,
                 price: event.target.formPrice.value,

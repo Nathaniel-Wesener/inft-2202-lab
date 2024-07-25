@@ -26,7 +26,7 @@ productService.prototype.getProduct = async function() {
         const products = await response.json();
         return products;
     } catch (error) {
-        console.error('ERROR:', error);
+        //console.error('ERROR:', error);
         return error;
     }
 }
@@ -60,37 +60,25 @@ productService.prototype.findProduct = async function(productId){
 
 productService.prototype.saveProduct = async function(product) {
     
-    let valid = true;
-    let existProducts =  await this.getProduct();
-
-    for(let value of existProducts.records){
-        if (value.productId === product.productId) {
-            valid = false;
-        }
+    const url = new URL('http://localhost:3000/api/products');
+    const headers = new Headers({
+        'Content-Type': 'application/json',
+        'apikey': '6671bdbff37f86c6ae70326f'
+    });
+    const request = new Request(url, {
+        headers,
+        method: 'POST',
+        body: JSON.stringify(product)
+    })
+    try {
+        const response = await fetch(request);
+        console.log('Success: ', response);
+        return true;
+    } catch (error) {
+        console.error('ERROR:', error);
+        return error;
     }
 
-    if (valid) {
-        const url = new URL('http://localhost:3000/api/products');
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-            'apikey': '6671bdbff37f86c6ae70326f'
-        });
-        const request = new Request(url, {
-            headers,
-            method: 'POST',
-            body: JSON.stringify(product)
-        })
-        try {
-            const response = await fetch(request);
-            console.log('Success: ', response);
-            return true;
-        } catch (error) {
-            console.error('ERROR:', error);
-            return error;
-        }
-    } else {
-        throw error;
-    }
 }
 
 // productService.prototype.findProduct = function(id) {
