@@ -4,7 +4,7 @@ import { NotFoundError } from '../../errors/NotFoundError.js';
 const handle = async(request, response, next) => {
 
     try {
-        const product = await Product.findById({_id: request.params.productIdId});
+        const product = await Product.findById({_id: request.params.productId});
         if(!product){
             throw new NotFoundError('Could not find that product');
         }

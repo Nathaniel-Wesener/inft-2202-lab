@@ -9,9 +9,31 @@ import { service } from "./product.service.js";
 const spinner = document.getElementById('loading');
 spinner.classList.remove('d-none')
 let products;
+const params = new URL(document.location).searchParams;
+const search = params.get("page");
+const search2 = params.get("perPage");
+
+let page;
+let perPage;
+
+if (search === null){
+    page = 1;
+} else {
+    page = search;
+}
+
+if (search2 === null){
+    perPage = 4;
+} else {
+    perPage = search2;
+}
+const query = {
+    page: page,
+    perPage: perPage
+}
 try {
     spinner.classList.add('d-none');
-    products =  await service.getProduct();
+    products =  await service.getProduct(query);
 } catch (error) {
     spinner.classList.add('d-none');
     console.error(error);
@@ -25,91 +47,32 @@ if (products.records.length === 0 || products === null) {
     eleDisclaimer.classList.remove('d-none');
 } else{
     
-    
-    
-    
-    const params = new URL(document.location).searchParams;
-    const search = params.get("page");
-    const search2 = params.get("perPage");
-
-    let page;
-    let perPage;
-
-    if (search === null){
-        page = 1;
-    } else {
-        page = search;
-    }
-
-    if (search2 === null){
-        perPage = 4;
-    } else {
-        perPage = search2;
-    }
-
-    const remainder = products.records.length % perPage;
-    let numPages;
-
-    if (remainder === 0) {
-        numPages = products.records.length / perPage;
-    } else {
-        numPages = (( products.records.length - remainder ) / perPage ) + 1;
-    }
-    await drawProductCardsPagination(products, page, perPage);
-    setPage(products, page, numPages, perPage);
+    await drawProductCardsPagination(products);
+    setPage(products, products.pagination.page, products.pagination.perPage);
 }
 
 let select = document.getElementById('drop2');
 select.addEventListener('click', (event) => {
     event.preventDefault();
     let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-    url.searchParams.set('perPage', 2);
-    window.history.pushState("", "", url);
-    const page = 1
-    const remainder = products.records.length % 2;
-    let numPages;
-
-    if (remainder === 0) {
-        numPages = products.records.length / 2;    
-    } else {
-        numPages = ((products.records.length - remainder ) / 2 ) + 1;
-    }
-    drawProductCardsPagination(products, page, 2);
+    products.pagination.perPage = 2;
+    drawProductCardsPagination(products);
 });
 
 select = document.getElementById('drop4');
 select.addEventListener('click', (event) => {
     event.preventDefault();
     let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-    url.searchParams.set('perPage', 4);
-    window.history.pushState("", "", url);
     const page = 1
-    const remainder = products.records.length % 4;
-    let numPages;
-
-    if (remainder === 0) {
-        numPages = products.records.length / 4;    
-    } else {
-        numPages = ((products.records.length - remainder ) / 4 ) + 1;
-    }
-    drawProductCardsPagination(products, page, 4);
+    products.pagination.perPage = 4;
+    drawProductCardsPagination(products);
 });
 select = document.getElementById('drop8');
 select.addEventListener('click', (event) => {
     event.preventDefault();
-    let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-    url.searchParams.set('perPage', 8);
-    window.history.pushState("", "", url);
     const page = 1
-    const remainder = products.records.length % 8;
-    let numPages;
-
-    if (remainder === 0) {
-        numPages = products.records.length / 8;    
-    } else {
-        numPages = ((products.records.length - remainder ) / 8 ) + 1;
-    }
-    drawProductCardsPagination(products, page, 8);
+    products.pagination.perPage = 8;
+    drawProductCardsPagination(products);
 });
 select = document.getElementById('drop12');
 select.addEventListener('click', (event) => {
@@ -118,15 +81,8 @@ select.addEventListener('click', (event) => {
     url.searchParams.set('perPage', 12);
     window.history.pushState("", "", url);
     const page = 1
-    const remainder = products.records.length % 12;
-    let numPages;
-
-    if (remainder === 0) {
-        numPages = products.records.length / 12;    
-    } else {
-        numPages = ((products.records.length - remainder ) / 12 ) + 1;
-    }
-    drawProductCardsPagination(products, page, 12);
+    products.pagination.perPage = 12;
+    drawProductCardsPagination(products);
 });
 
 function drawProductCards(list) {
@@ -211,8 +167,8 @@ async function addCard(product, div) {
         newEdit.addEventListener('click', (event) => {
             event.preventDefault();
 
-            const url = new URL("http://127.0.0.1:5500/src/client/add.html");
-            url.searchParams.set('id', product.productId);
+            const url = new URL("http://localhost:3000/add.html");
+            url.searchParams.set('id', product._id);
             window.location.replace(url);
         });
         newDiv.appendChild(newEdit);
@@ -241,7 +197,8 @@ async function addCard(product, div) {
         });
         const eleModalDelete = document.getElementById('modal-delete');
         eleModalDelete.addEventListener('click', async (event) =>{
-            const deleted = await service.deleteProduct(product.productId);
+            console.log(product);
+            const deleted = await service.deleteProduct(product._id);
     
             if (deleted) {
                 window.location.reload();
@@ -258,16 +215,11 @@ async function addCard(product, div) {
     div.appendChild(space);
 }
 
-function drawProductCardsPagination(list, page, perPage) {
-    
-    const remainder = list.records.length % perPage;
-    let numPages;
+function drawProductCardsPagination(list) {
 
-    if (remainder === 0) {
-        numPages = list.records.length / perPage;    
-    } else {
-        numPages = ((list.records.length - remainder ) / perPage ) + 1;
-    }
+    let numPages = list.pagination.pages;
+    let page = list.pagination.page;
+    let perPage = list.pagination.perPage;
     
     
     
@@ -287,7 +239,7 @@ function drawProductCardsPagination(list, page, perPage) {
     newLink.href = "";
     newLink.addEventListener('click', (event) => {
         event.preventDefault();
-        currentPage  = setPage(list, page - 1, numPages, perPage);
+        setPage(list, page - 1, perPage);
     });
     newItem.appendChild(newLink);
     eleNav.appendChild(newItem);
@@ -301,7 +253,7 @@ function drawProductCardsPagination(list, page, perPage) {
         newLink.href = "";
         newLink.addEventListener('click', (event) => {
             event.preventDefault();
-            setPage(list, index + 1, numPages, perPage);
+            setPage(list, index + 1, perPage);
         });
         newItem.appendChild(newLink);
         eleNav.appendChild(newItem);  
@@ -315,19 +267,33 @@ function drawProductCardsPagination(list, page, perPage) {
     newLink.href = "";
     newLink.addEventListener('click', (event) => {
         event.preventDefault();
-        setPage(list, page + 1, numPages, perPage);
+        setPage(list, page + 1, perPage);
     });
     newItem.appendChild(newLink);
     eleNav.appendChild(newItem);
 
-    setPage(list, page, numPages, perPage);
+    setPage(list, page, perPage);
 }
 
-function setPage(list, page, numPages, perPage) {
+async function setPage(list, page, perPage) {
     
+    const query = {
+        page: page,
+        perPage: perPage
+    }
+    try {
+        spinner.classList.add('d-none');
+        products =  await service.getProduct(query);
+    } catch (error) {
+        spinner.classList.add('d-none');
+        console.error(error);
+        const eleServer = document.getElementById('serverError')
+        eleServer.classList.remove('d-none');
+    }
+    let numPages = products.pagination.pages;
     let url = new URL("http://127.0.0.1:5500/src/client/list.html");
-    url.searchParams.set('page', page);
-    url.searchParams.set('perPage', perPage)
+    url.searchParams.set('page', products.pagination.page);
+    url.searchParams.set('perPage', products.pagination.perPage)
     //window.history.pushState("", "", url);
     const eleNav = document.getElementById('page-links');
 
@@ -353,12 +319,8 @@ function setPage(list, page, numPages, perPage) {
     const div = document.getElementById('product-display');
     div.innerHTML = "";
     
-    for (let index = 0; index < perPage; index++) {
-        
-        if (( (page - 1 ) * perPage )  + index > list.records.length - 1) {
-            break;
-        }
-        addCard(list.records[ ( (page - 1 ) * perPage )  + index], div);
+    for (const product of products.records) {
+        addCard(product, div)
     }
     
     return page;

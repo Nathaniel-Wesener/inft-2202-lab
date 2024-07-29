@@ -8,7 +8,7 @@ File Description: File that handles the add form in the add.html file. (Image fu
 import { service } from './product.service.js';
 
 const params = new URL(document.location).searchParams;
-const search = params.get("id")
+const search = params.get("id");
 
 const form = document.getElementById('formAdd');
 

@@ -10,16 +10,19 @@ function productService()
     
 }
 
-productService.prototype.getProduct = async function() {
+productService.prototype.getProduct = async function(query) {
 
+    console.log(query);
     const url = new URL('http://localhost:3000/api/products');
+    url.searchParams.set('page', query.page);
+    url.searchParams.set('perPage', query.perPage);
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
     });
     const request = new Request(url, {
         headers,
-        method: 'GET'
+        method: 'GET',
     })
     try {
         const response = await fetch(request);
@@ -35,6 +38,7 @@ productService.prototype.findProduct = async function(productId){
     const api = 'products';
     productId = api.concat('/', productId);
     const url = new URL(productId, 'http://localhost:3000/api/products');
+    console.log(url);
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
@@ -105,8 +109,8 @@ productService.prototype.editProduct = async function(product, productId) {
         return false;
     }
     const api = 'products';
-    oldProduct.productId = api.concat('/', oldProduct.productId);
-    const url = new URL(oldProduct.productId, 'http://localhost:3000/api/products');
+    oldProduct._id = api.concat('/', oldProduct._id);
+    const url = new URL(oldProduct._id, 'http://localhost:3000/api/products');
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
@@ -129,9 +133,9 @@ productService.prototype.editProduct = async function(product, productId) {
 
 productService.prototype.deleteProduct = async function(productId) {
     
-    const api = 'products';
+    const api = 'api/products';
     productId = api.concat('/', productId);
-    const url = new URL(productId, 'http://localhost:3000/api/products');
+    const url = new URL(productId, 'http://localhost:3000');
     const headers = new Headers({
         'Content-Type': 'application/json',
         'apikey': '6671bdbff37f86c6ae70326f'
