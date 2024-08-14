@@ -1,0 +1,71 @@
+<div class="container">
+    <h1>View and purchase our wonderfull products!</h1>
+    <div class="modal" tabindex="-1" id="confirm-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Product?</h5>
+            <button id="modal-x" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this Product?</p>
+          </div>
+          <div class="modal-footer">
+            <button id="modal-close" title="close the pop-up and do not delete the product" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="modal-delete" title="click this to delete the product" type="button" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="loading" class="fa-3x d-none">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <p id="serverError" class="d-none">Sorry we cannot connect to the server please come again latter.</p>
+    <div id="pagination-master" class="d-none">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Entries per Page
+        </button>
+        <ul class="dropdown-menu">
+          <li><a id="drop2" class="dropdown-item">2</a></li>
+          <li><a id="drop4" class="dropdown-item">4</a></li>
+          <li><a id="drop8" class="dropdown-item">8</a></li>
+          <li><a id="drop12" class="dropdown-item">12</a></li>
+        </ul>
+      </div>
+    <br/>
+    <br/>
+      
+      <nav aria-label="Page navigation example">
+        <ul  id="page-links" class="pagination justify-content-center">
+  
+        </ul>
+      </nav>
+      </div>
+    <div id="product-display" class="row">
+        <% if(products.length) { %>
+            <% for (let product of products) { %>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= product.name %></h5>
+                      <p class="card-text"><%= product.description %></p>
+                      <p class="card-text">Stock: <%= product.stock %></p>
+                      <p class="card-text">Price: $<%= product.price %></p>
+                      <a href="" class="btn btn-primary">
+                        <img src="../../node_modules/@fortawesome/fontawesome-free/svgs/solid/cart-shopping.svg"  width="20" height="20">
+                        </a>
+                        <a href="/edit" class="btn btn-secondary">
+                            Edit
+                        </a>
+                        <a href="" id="" class="btn btn-danger">
+                            <img src="../../node_modules/@fortawesome/fontawesome-free/svgs/regular/trash-can.svg"  width="20" height="20">
+                        </a> 
+                    </div>
+                  </div>
+            <% } %>
+        <% } else { %>
+            <div class="alert alert-warning">Sorry we currently have no products please come again latter.</div>
+        <% } %>
+    </div>
+    </div>

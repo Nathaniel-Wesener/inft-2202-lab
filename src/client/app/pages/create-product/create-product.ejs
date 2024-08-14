@@ -1,0 +1,30 @@
+<div class="container">
+    <h1 id="add-heading">Add a Product</h1>
+    <div id="loading" class="fa-3x container d-none">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <p id="serverError" class="d-none">Sorry we cannot connect to the server please come again latter.</p>
+    <div class="form-area">
+        <form action="" method="POST" id="formAdd">
+        <label for="formName" class="form-label">Product Name:</label>
+        <input type="text" class="form-control" id="formName" name="formName">
+        <p id="nameError" class="text-danger d-none">Your product must have a name.</p>
+        </br>
+        <label for="formPrice" class="form-label">Product Price (in CDN):</label>
+        <input type="text" class="form-control" id="formPrice" name="formPrice">
+        <p id="priceError" class="text-danger d-none">Your product must have a price.</p>
+        </br>
+        <label for="formStock" class="form-label">Product Stock:</label>
+        <input type="text" class="form-control" id="formStock" name="formStock">
+        <p id="stockError" class="text-danger d-none">You must tell us how much product is in stock.</p>
+        </br>
+        <label for="formDesc" class="form-label">Describe your product here:</label>
+            <textarea class="form-control" id="formDesc" name="formDesc" placeholder="Describe your product here..." rows="5"></textarea>
+            <p id="descError" class="text-danger d-none">You must describe your product.</p>
+        </br>
+        <label for="formImg" class="form-label">Product Image (optional):</label>
+        <input type="file" class="form-control" id="formImg" name="formImg" accept="image/png, image/jpeg">
+        </br>
+        <input type="submit" class="form-control" id="formSubmit" name="formSubmit" value="Submit Product">
+        </form>
+    </div>

@@ -1,7 +1,6 @@
 import Navigo from 'navigo';
 import 'bootstrap';
 import './scss/styles.scss';
-import './img/nullundefined.png';
 import HeaderComponent from './app/components/header/header.js';
 import FooterComponent from './app/components/footer/footer.js';
 import HomePage from './app/pages/home/home.js';

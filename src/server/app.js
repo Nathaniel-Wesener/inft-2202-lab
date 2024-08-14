@@ -1,5 +1,6 @@
 // express uses http internally
-import express from 'express';
+import path from 'path';
+import express, {request, response} from 'express';
 import {router} from './routes/router.js';
 import mongoose from 'mongoose';
 import { LoggingMiddleware } from './middleware/logging.js';
@@ -14,8 +15,12 @@ server.use(LoggingMiddleware);
 
 server.use(router);
 const localDir = import.meta.dirname
-server.use(express.static(`${localDir}/../client`));
+server.use(express.static(`${import.meta.dirname}/../../dist`));
 server.use('/node_modules', express.static(`${localDir}/../../node_modules`));
+server.get('*', (request, response, next) => {
+    response.sendFile(path.resolve(import.meta.dirname + '/../../dist/index.html'));
+});
+
 server.use(ErrorHandlingMiddleware);
 
 try{
