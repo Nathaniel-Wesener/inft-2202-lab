@@ -1,2 +1,15 @@
-# inft-2202-lab
-I the genius master programmer Nathaniel Wesener have created this repository in order to store code for my labs for INFT 2202.
+# 🚀 Welcome to your new awesome project!
+
+This project has been created using **webpack-cli**, you can now run
+
+```
+npm run build
+```
+
+or
+
+```
+yarn build
+```
+
+to bundle your application
