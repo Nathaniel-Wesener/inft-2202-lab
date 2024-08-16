@@ -28,6 +28,7 @@ productService.prototype.getProduct = async function(query) {
 }
 
 productService.prototype.findProduct = async function(productId){
+    
     const api = 'products';
     productId = api.concat('/', productId);
     const url = new URL(productId, 'http://localhost:3000/api/products');

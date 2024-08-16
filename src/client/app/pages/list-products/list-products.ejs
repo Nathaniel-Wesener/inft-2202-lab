@@ -21,11 +21,13 @@
       <i class="fas fa-spinner fa-spin"></i>
     </div>
     <p id="serverError" class="d-none">Sorry we cannot connect to the server please come again latter.</p>
-    <div id="pagination-master" class="d-none">
+    <div id="pagination-master" class="">
+
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Entries per Page
         </button>
+        
         <ul class="dropdown-menu">
           <li><a id="drop2" class="dropdown-item">2</a></li>
           <li><a id="drop4" class="dropdown-item">4</a></li>
@@ -43,29 +45,31 @@
       </nav>
       </div>
     <div id="product-display" class="row">
+      <br>
         <% if(products.length) { %>
             <% for (let product of products) { %>
                 <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title"><%= product.name %></h5>
-                      <p class="card-text"><%= product.description %></p>
+                      <h5 class="card-title">Product: <%= product.name %></h5>
+                      <p class="card-text">Description: <%= product.description %></p>
                       <p class="card-text">Stock: <%= product.stock %></p>
                       <p class="card-text">Price: $<%= product.price %></p>
-                      <a href="" class="btn btn-primary">
+                      <a class="btn btn-primary">
                         <img src="../../node_modules/@fortawesome/fontawesome-free/svgs/solid/cart-shopping.svg"  width="20" height="20">
                         </a>
-                        <a href="/edit" class="btn btn-secondary">
+                        <a route="/edit?id=<%= product._id %>" class="btn btn-secondary">
                             Edit
                         </a>
-                        <a href="" id="" class="btn btn-danger">
+                        <a id=product._id class="btn btn-danger">
                             <img src="../../node_modules/@fortawesome/fontawesome-free/svgs/regular/trash-can.svg"  width="20" height="20">
                         </a> 
+                        <p class="card-text">Created at: <%= product.createdAt %></p>
                     </div>
                   </div>
+                  <br>
             <% } %>
         <% } else { %>
             <div class="alert alert-warning">Sorry we currently have no products please come again latter.</div>
         <% } %>
     </div>
-    </div>
+</div>

@@ -7,6 +7,8 @@ import HomePage from './app/pages/home/home.js';
 import AboutPage from './app/pages/about/about.js';
 import ContactPage from './app/pages/contact/contact.js';
 import AddPage from './app/pages/create-product/create-product.js';
+import ListPage from './app/pages/list-products/list-products.js';
+import EditPage from './app/pages/edit-product/edit-product.js';
 
 export const router = new Navigo('/')
 
@@ -18,6 +20,8 @@ window.addEventListener('load', () =>{
         .on('/about', AboutPage)
         .on('/contact', ContactPage)
         .on('/add', AddPage)
+        .on('/list', ListPage)
+        .on('/edit', EditPage)
         .resolve();
     
     document.addEventListener('click', (event) =>{
@@ -25,6 +29,7 @@ window.addEventListener('load', () =>{
             event.preventDefault();
             router.navigate(event.target.attributes['route'].value);
         }
+
         
     })
 })
