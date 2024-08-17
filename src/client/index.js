@@ -28,6 +28,14 @@ window.addEventListener('load', () =>{
         if (event.target.attributes['route']) {
             event.preventDefault();
             router.navigate(event.target.attributes['route'].value);
+            const params = new URL(document.location).searchParams;
+            console.log(params);
+            const search = params.get("page");
+            const search2 = params.get("perPage");
+            if (search != null || search2 != null) {
+                window.location.reload();
+            }
+
         }
 
         

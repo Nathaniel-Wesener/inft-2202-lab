@@ -24,12 +24,12 @@ const formSubmitHandler = async (event) =>{
 
     if (valid) {
         try {
-            const product = new Product({
-                name: event.target.formName.value,
-                price: event.target.formPrice.value,
-                stock: event.target.formStock.value,
-                description: event.target.formDesc.value,
-            })
+            const product = new Product(
+                event.target.formName.value,
+                event.target.formPrice.value,
+                event.target.formStock.value,
+                event.target.formDesc.value,
+            )
             await service.saveProduct(product);
             window.location = "/list"
         } catch (error) {

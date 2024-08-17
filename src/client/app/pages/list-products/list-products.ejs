@@ -29,10 +29,10 @@
         </button>
         
         <ul class="dropdown-menu">
-          <li><a id="drop2" class="dropdown-item">2</a></li>
-          <li><a id="drop4" class="dropdown-item">4</a></li>
-          <li><a id="drop8" class="dropdown-item">8</a></li>
-          <li><a id="drop12" class="dropdown-item">12</a></li>
+          <li><a id="drop2" class="dropdown-item" route="/list?page=<%= products.pagination.page %>&perPage=2">2</a></li>
+          <li><a id="drop4" class="dropdown-item" route="/list?page=<%= products.pagination.page %>&perPage=4">4</a></li>
+          <li><a id="drop8" class="dropdown-item" route="/list?page=<%= products.pagination.page %>&perPage=8">8</a></li>
+          <li><a id="drop12" class="dropdown-item" route="/list?page=<%= products.pagination.page %>&perPage=12">12</a></li>
         </ul>
       </div>
     <br/>
@@ -40,14 +40,27 @@
       
       <nav aria-label="Page navigation example">
         <ul  id="page-links" class="pagination justify-content-center">
-  
+          <% if(products.pagination.page == 1) { %>
+          <li class="page-item"><a class="diasabled page-link">Prev</a></li>
+          <% } else {  %>
+            <li class="page-item"><a route="/list?page=<%= products.pagination.page - 1 %>&perPage=<%= products.pagination.perPage %>" class="page-link">Prev</a></li>
+          <% } %>
+          <% for(let page = 0; page < products.pagination.pages; page++) { %>
+            <li class="page-item"><a route="/list?page=<%= page + 1 %>&perPage=<%= products.pagination.perPage %>" class="page-link"><%= page + 1 %></a></li>
+          <% } %>
+          <% if(products.pagination.page == products.pagination.pages) { %>
+            <li class="page-item"><a class="diasabled page-link">Next</a></li>
+            <% } else {  %>
+              <li class="page-item"><a route="/list?page=<%= products.pagination.page + 1 %>&perPage=<%= products.pagination.perPage %>" class="page-link">Next</a></li>
+            <% } %>
+
         </ul>
       </nav>
       </div>
     <div id="product-display" class="row">
-      <br>
-        <% if(products.length) { %>
-            <% for (let product of products) { %>
+
+        <% if(products.records.length) { %>
+            <% for (let product of products.records) { %>
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                       <h5 class="card-title">Product: <%= product.name %></h5>
@@ -60,7 +73,7 @@
                         <a route="/edit?id=<%= product._id %>" class="btn btn-secondary">
                             Edit
                         </a>
-                        <a id=product._id class="btn btn-danger">
+                        <a id="<%= product._id %>" class="btn btn-danger">
                             <img src="../../node_modules/@fortawesome/fontawesome-free/svgs/regular/trash-can.svg"  width="20" height="20">
                         </a> 
                         <p class="card-text">Created at: <%= product.createdAt %></p>
